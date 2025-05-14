@@ -13,7 +13,7 @@ const StartupCard = ({post}:{post: StartupTypeCard}) => {
         <li className="startup-card group">
             <div className="flex-between">
                 <p className="startup-card_date">
-                    {formatDate(_createdAt)}
+                    {formatDate(_createdAt.toString())}
                 </p>
                 <div className="flex gap-1.5">
                     <EyeIcon className="size-6 text-primary"/>
