@@ -172,8 +172,28 @@ export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: IDEAS_QUERY
-// Query: *[_type=="idea"&&defined(slug.current)] | order(_createdAt desc) {  _id, _createdAt,    author -> {_id, name, image, bio}    ,category,description,image,title,views,slug}
+// Query: *[_type=="idea" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search] | order(_createdAt desc) {  _id, _createdAt,    author -> {_id, name, image, bio}    ,category,description,image,title,views,slug}
 export type IDEAS_QUERYResult = Array<{
+  _id: string;
+  _createdAt: string;
+  author: null;
+  category: null;
+  description: null;
+  image: string | null;
+  title: null;
+  views: null;
+  slug: null;
+} | {
+  _id: string;
+  _createdAt: string;
+  author: null;
+  category: null;
+  description: string | null;
+  image: null;
+  title: string | null;
+  views: null;
+  slug: null;
+} | {
   _id: string;
   _createdAt: string;
   author: {
@@ -189,11 +209,31 @@ export type IDEAS_QUERYResult = Array<{
   views: number | null;
   slug: Slug | null;
 }>;
+// Variable: IDEA_BY_ID_QUERY
+// Query: *[_type=="idea"&& _id==$id][0] {  _id, _createdAt,    author -> {_id, name, image, bio}    ,category,description,image,title,views,slug,pitch}
+export type IDEA_BY_ID_QUERYResult = {
+  _id: string;
+  _createdAt: string;
+  author: {
+    _id: string;
+    name: string | null;
+    image: string | null;
+    bio: string | null;
+  } | null;
+  category: string | null;
+  description: string | null;
+  image: string | null;
+  title: string | null;
+  views: number | null;
+  slug: Slug | null;
+  pitch: string | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type==\"idea\"&&defined(slug.current)] | order(_createdAt desc) {\n  _id, _createdAt,\n    author -> {_id, name, image, bio}\n    ,category,description,image,title,views,slug\n}": IDEAS_QUERYResult;
+    "*[_type==\"idea\" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search] | order(_createdAt desc) {\n  _id, _createdAt,\n    author -> {_id, name, image, bio}\n    ,category,description,image,title,views,slug\n}": IDEAS_QUERYResult;
+    "*[_type==\"idea\"&& _id==$id][0] {\n  _id, _createdAt,\n    author -> {_id, name, image, bio}\n    ,category,description,image,title,views,slug,pitch\n}": IDEA_BY_ID_QUERYResult;
   }
 }
