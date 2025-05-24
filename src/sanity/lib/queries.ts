@@ -14,5 +14,10 @@ export const IDEA_BY_ID_QUERY=defineQuery(`*[_type=="idea"&& _id==$id][0] {
 
 export const IDEA_VIEW_QUERY = defineQuery(`
     *[_type=="idea"&& _id==$id][0] {
-    _id, views,}
+    _id, views}
     `);
+
+export const AUTHOR_BY_GITHUB_ID_QUERY=defineQuery(`
+*[_type=="author"&& _id==$id][0] {
+_id, id, name, username, email, image, bio
+}`)
