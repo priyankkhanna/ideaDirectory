@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import 'easymde/dist/easymde.min.css'
 import localFont from "next/font/local"
+import {Toaster} from "@/components/ui/sonner"
 
 const workSans=localFont({
     src:[
@@ -67,13 +68,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={workSans.variable}
-      >
+    return (
+        <html lang="en">
+        <body
+            className={workSans.variable}
+        >
         {children}
-      </body>
-    </html>
-  );
+        <Toaster/>
+        </body>
+        </html>
+    );
 }
