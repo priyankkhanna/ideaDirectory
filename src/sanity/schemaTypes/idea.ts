@@ -49,7 +49,7 @@ export const idea = defineType({
     ],
     preview:{
         select:{
-            title:"name",
+            title:"title",
         }
     }
 })
