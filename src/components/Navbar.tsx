@@ -2,7 +2,6 @@ import React from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import {auth, signIn, signOut} from "@/auth";
-import LoginButton from "@/components/LoginButton";
 
 
 
