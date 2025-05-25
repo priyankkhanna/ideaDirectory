@@ -33,7 +33,7 @@ const Page = async ({params}: {params: Promise<{id: string}>}) => {
                     </p>
                 </div>
                 <div className="flex-1 flex flex-col gap-5">
-                    <p className="text-30-bold">
+                    <p className="text-30-bold text-center">
                         Ideas Submitted
                     </p>
                     <ul className="card_grid-sm">
