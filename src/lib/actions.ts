@@ -4,8 +4,6 @@ import {auth} from "@/auth"
 import {parseServerActionResponse} from "@/lib/utils";
 import slugify from "slugify";
 import {writeClient} from "@/sanity/lib/write-client";
-import {client} from "@/sanity/lib/client";
-import {AUTHOR_BY_EMAIL_QUERY} from "@/sanity/lib/queries";
 
 export const createPitch = async (
     state: any,
@@ -19,12 +17,6 @@ export const createPitch = async (
     const {title, description, category, link} = Object.fromEntries(Array.from(form).filter(([key])=> key!='pitch'));
     const slug = slugify(title as string, {lower:true, strict: true});
 
-    const user = await client
-        .withConfig({ useCdn: false })
-        .fetch(AUTHOR_BY_EMAIL_QUERY, {
-            email: session.user.email,
-        });
-
     try{
         const idea={
             title,
@@ -37,7 +29,7 @@ export const createPitch = async (
             },
             author:{
                 _type: 'reference',
-                _ref: user?._id,
+                _ref: session?.id,
             },
             pitch,
         }

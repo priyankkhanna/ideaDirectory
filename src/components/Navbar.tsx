@@ -2,8 +2,6 @@ import React from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import {auth, signIn, signOut} from "@/auth";
-import {client} from "@/sanity/lib/client";
-import {AUTHOR_BY_EMAIL_QUERY} from "@/sanity/lib/queries";
 import {BadgePlus, LogOut} from "lucide-react";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 
@@ -11,11 +9,6 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 
 const Navbar = async () => {
     const session = await auth();
-    const user = await client
-        .withConfig({ useCdn: false })
-        .fetch(AUTHOR_BY_EMAIL_QUERY, {
-            email: session.user.email,
-        });
 
     return (
         <header className="px-5 py-5 bg-white shadow-sm font-work-sans">
@@ -40,7 +33,7 @@ const Navbar = async () => {
                                     <LogOut className="size-6 sm:hidden text-red-500" />
                                 </button>
                             </form>
-                            <Link href={`/user/${user?._id}`}>
+                            <Link href={`/user/${session?.id}`}>
                                 <Avatar className="size-10">
                                     <AvatarImage src={session?.user?.image || ''} alt={session?.user?.name || ''} />
                                     <AvatarFallback>AV</AvatarFallback>
