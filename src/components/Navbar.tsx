@@ -2,11 +2,18 @@ import React from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import {auth, signIn, signOut} from "@/auth";
+import {client} from "@/sanity/lib/client";
+import {AUTHOR_BY_EMAIL_QUERY} from "@/sanity/lib/queries";
 
 
 
 const Navbar = async () => {
     const session = await auth();
+    const user = await client
+        .withConfig({ useCdn: false })
+        .fetch(AUTHOR_BY_EMAIL_QUERY, {
+            email: session.user.email,
+        });
 
     return (
         <header className="px-5 py-5 bg-white shadow-sm font-work-sans">
@@ -27,7 +34,7 @@ const Navbar = async () => {
                             }}>
                                 <button type="submit"><span>logout</span></button>
                             </form>
-                            <Link href={`/user/${session?.id}`}>
+                            <Link href={`/user/${user?._id}`}>
                                 <span>{session?.user?.name}</span>
                             </Link>
                         </>
